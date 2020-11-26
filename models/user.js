@@ -1,4 +1,6 @@
 'use strict';
+
+const {generatePassword} = require('../helper/bcrypt')
 const {
   Model
 } = require('sequelize');
@@ -20,5 +22,9 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
   });
+  User.addHook('beforeCreate', (instance, option) => {
+    const hash = generatePassword(instance.password)
+    instance.password = hash
+  })
   return User;
 };
