@@ -1,3 +1,4 @@
+const axios = require('axios')
 const {User} = require('../models')
 const  {comparePassword} = require('../helper/bcrypt')
 const {generateToken} = require('../helper/jwt')
@@ -14,7 +15,6 @@ class Controller {
         } catch (error) {
             res.status(400).json({msg: "Email telah digunakan!"})
         }
-
     }
 
     static async login(req, res) {
@@ -38,8 +38,55 @@ class Controller {
         }
     }
 
-    static async getGames(req, res) {
-        res.status(200).json('yess i got it')
+    static igdbAPI(req, res) {
+        console.log('@ igdb Api');
+        axios({
+                url: `https://api.igdb.com/v4/games`,
+                method: 'POST',
+                headers: {
+                    "Client-ID": process.env.CLIENTID_IGDB,
+                    "Authorization": 'Bearer ' + process.env.AUTHORIZATION
+                },
+                data: "fields name, url, release_dates.*, cover.*;"
+            })
+            .then(response => {
+                res.json(response.data)
+            })
+            .catch(err => {
+                res.status(500).json({
+                    msg: 'internal server error'
+                })
+            })
+    }
+
+    static jokesAPI(req, res) {
+        console.log('@ jokes API');
+        axios({
+                url: 'https://sv443.net/jokeapi/v2/joke/Any',
+                method: 'GET'
+            })
+            .then(response => {
+                res.json(response.data)
+            })
+            .catch(err => {
+                res.status(500).json({
+                    msg: err
+                })
+            })
+    }
+
+    static triviaAPI(req, res) {
+        console.log('@ trivia API');
+        axios({
+                url: 'https://opentdb.com/api.php?amount=10&category=15&difficulty=medium',
+                method: 'GET'
+            })
+            .then(response => {
+                res.json(response.data.results)
+            })
+            .catch(err => {
+                res.status(500).json({msg: 'internal server error'})
+            })
     }
 }
 
