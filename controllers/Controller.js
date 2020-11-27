@@ -26,7 +26,6 @@ class Controller {
             })
             if (!data) res.status(400).json({msg: "Invalid email or password!"})
             else if(comparePassword(req.body.password, data.password)) {
-               
                 const access_token =  generateToken({id: data.id, email: data.email})
                 res.status(200).json({access_token})
 
