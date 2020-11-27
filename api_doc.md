@@ -1,7 +1,7 @@
 # games-app-server
 
 Games App is an application to get information about games list, fun querntion, and good jokes. This app has : 
-* RESTful endpoint for todo's CRUD operation
+* REST endpoint 
 * JSON formatted response
 
 &nbsp;
@@ -79,7 +79,37 @@ _Response (401 - Unauthorized)_
 ```
 
 ---
-### GET /jokesAPI (undone)
+### POST /googlelogin
+
+> Create token for user
+
+_Request Header_
+```
+not needed data
+```
+
+_Request Body_
+```
+required : 
+- google account
+```
+
+_Response (200 - Success)_
+```
+{
+  "access_token": "<your access token>"
+}
+```
+
+_Response (500 - Internal server error)_
+```
+{
+    "msg": "Internal server error"
+}
+```
+
+---
+### GET /jokesAPI 
 
 > Get jokes data from jokes api
 
@@ -201,39 +231,5 @@ _Response (400 - Bad Request)_
 ```
 {
     "msg": "Email telah digunakan"
-}
-```
----
-### GET /googlelogin
-
-> Create token for user
-
-_Request Header_
-```
-not needed data
-```
-
-_Request Body_
-```
-required : 
-- google account
-
-{
-  "email": "<email to get insert into>",
-  "password": "<password to get insert into>"
-}
-```
-
-_Response (200 - Success)_
-```
-{
-  "access_token": "<your access token>"
-}
-```
-
-_Response (401 - Unauthorized)_
-```
-{
-    "msg": "Invalid email or password"
 }
 ```
