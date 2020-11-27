@@ -125,7 +125,7 @@ _Request Body_
 not needed
 ```
 
-_Response (201)_
+_Response (200)_
 ```
 {
     "error": false,
@@ -219,7 +219,7 @@ _Request Body_
 }
 ```
 
-_Response (201)_
+_Response (200)_
 ```
 {
     "id": 5,
