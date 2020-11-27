@@ -55,7 +55,6 @@ class Controller {
             })
             if (!data) res.status(400).json({msg: "Invalid email or password!"})
             else if(comparePassword(req.body.password, data.password)) {
-               
                 const access_token =  generateToken({id: data.id, email: data.email})
                 res.status(200).json({access_token})
 
@@ -76,9 +75,10 @@ class Controller {
                     "Client-ID": process.env.CLIENTID_IGDB,
                     "Authorization": 'Bearer ' + process.env.AUTHORIZATION
                 },
-                data: "fields name, url, release_dates.*, cover.*;"
+                data: "fields name, url, release_dates.*, cover.*; where rating > 70;"
             })
             .then(response => {
+                // console.log(response.data);
                 res.json(response.data)
             })
             .catch(err => {
